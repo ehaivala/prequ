@@ -2,6 +2,7 @@
 #
 #   prequ update
 #
+click==6.7
 pluggy==0.6.0
 py==1.5.2
 six==1.11.0
