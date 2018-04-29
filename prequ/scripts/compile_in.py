@@ -7,8 +7,6 @@ import sys
 import tempfile
 
 import click
-import pip
-from pip.req import InstallRequirement, parse_requirements
 
 from ..exceptions import PrequError
 from ..logging import log
@@ -19,6 +17,15 @@ from ..utils import (
     is_pinned_requirement, key_from_ireq)
 from ..writer import OutputWriter
 from ._repo import get_pip_options_and_pypi_repository
+
+try:
+    # pip<=9.x.x
+    import pip
+    from pip.req import InstallRequirement, parse_requirements
+except ImportError:
+    # pip>=10.0.0
+    from pip import _internal as pip
+    from pip._internal.req import InstallRequirement, parse_requirements
 
 click.disable_unicode_literals_warning = True
 

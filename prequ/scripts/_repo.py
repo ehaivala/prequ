@@ -1,8 +1,13 @@
 import optparse
 
-import pip
-
 from ..repositories import PyPIRepository
+
+try:
+    # pip>=10.0.0
+    from pip import _internal as pip
+except ImportError:
+    # pip<=9.x.x
+    import pip
 
 
 class PipCommand(pip.basecommand.Command):

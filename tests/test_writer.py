@@ -1,8 +1,14 @@
-from pip.index import FormatControl
 from pytest import fixture
 
 from prequ.utils import comment
 from prequ.writer import OutputWriter
+
+try:
+    # pip<=9.x.x
+    from pip.index import FormatControl
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.index import FormatControl
 
 
 @fixture

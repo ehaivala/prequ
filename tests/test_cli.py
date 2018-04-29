@@ -7,12 +7,18 @@ from textwrap import dedent
 import mock
 import pytest
 from click.testing import CliRunner
-from pip.download import path_to_url
 
 from prequ.scripts.compile_in import cli
 from prequ.scripts.sync import cli as sync_cli
 
 from .utils import check_successful_exit
+
+try:
+    # pip<=9.x.x
+    from pip.download import path_to_url
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.download import path_to_url
 
 
 @pytest.yield_fixture

@@ -1,9 +1,16 @@
 from mock import MagicMock, patch
-from pip.index import PackageFinder
-from pip.req import InstallRequirement
 
 from prequ.repositories.pypi import PyPIRepository
 from prequ.scripts._repo import get_pip_command
+
+try:
+    # pip<=9.x.x
+    from pip.index import PackageFinder
+    from pip.req import InstallRequirement
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.index import PackageFinder
+    from pip._internal.req import InstallRequirement
 
 
 def test_pypirepo_build_dir_is_str():

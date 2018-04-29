@@ -6,13 +6,19 @@ import os
 import sys
 
 import click
-import pip
 
 from .. import sync
 from ..exceptions import PrequError
 from ..logging import log
 from ..utils import assert_compatible_pip_version, flat_map
 from ._repo import get_pip_options_and_pypi_repository
+
+try:
+    # pip>=10.0.0
+    from pip import _internal as pip
+except ImportError:
+    # pip<=9.x.x
+    import pip
 
 click.disable_unicode_literals_warning = True
 

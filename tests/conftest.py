@@ -7,7 +7,6 @@ import pkg_resources
 import pytest
 from pip._vendor.packaging.version import Version
 from pip._vendor.pkg_resources import Requirement
-from pip.req import InstallRequirement
 from pytest import fixture
 
 from prequ.cache import DependencyCache
@@ -19,6 +18,13 @@ from prequ.utils import (
     name_from_req)
 
 from .dirs import FAKE_PYPI_WHEELS_DIR
+
+try:
+    # pip<=9.x.x
+    from pip.req import InstallRequirement
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.req import InstallRequirement
 
 
 class FakeRepository(BaseRepository):

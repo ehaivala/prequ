@@ -2,11 +2,17 @@ import re
 
 import mock
 import pytest
-from pip.req import InstallRequirement
 
 from prequ.repositories.local import LocalRequirementsRepository
 from prequ.repositories.pypi import PyPIRepository
 from prequ.utils import key_from_ireq
+
+try:
+    # pip<=9.x.x
+    from pip.req import InstallRequirement
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.req import InstallRequirement
 
 
 def ireq(line, extras=None):

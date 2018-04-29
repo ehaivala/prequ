@@ -4,11 +4,17 @@ from collections import Counter
 
 import mock
 import pytest
-from pip.download import path_to_url, url_to_path
 
 from prequ.exceptions import IncompatibleRequirements
 from prequ.sync import dependency_tree, diff, merge, sync
 from prequ.utils import get_ireq_version, key_from_dist, normalize_req_name
+
+try:
+    # pip<=9.x.x
+    from pip.download import path_to_url, url_to_path
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.download import path_to_url, url_to_path
 
 
 @pytest.mark.parametrize(

@@ -1,11 +1,16 @@
 import os
 import shutil
 
-from pip.download import path_to_url
-
 from prequ.utils import (
     as_tuple, dedup, flat_map, format_requirement, format_specifier,
     is_subdirectory)
+
+try:
+    # pip<=9.x.x
+    from pip.download import path_to_url
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.download import path_to_url
 
 
 def test_is_subdirectory():

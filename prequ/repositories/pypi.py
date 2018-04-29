@@ -7,10 +7,6 @@ import os
 from contextlib import contextmanager
 from shutil import rmtree
 
-from pip.download import is_file_url, url_to_path
-from pip.index import PackageFinder
-from pip.req.req_set import RequirementSet
-
 from .._compat import TemporaryDirectory
 from ..cache import CACHE_DIR
 from ..exceptions import NoCandidateFound
@@ -18,6 +14,17 @@ from ..utils import (
     check_is_hashable, fs_str, is_vcs_link, lookup_table,
     make_install_requirement, pip_version_info)
 from .base import BaseRepository
+
+try:
+    # pip<=9.x.x
+    from pip.download import is_file_url, url_to_path
+    from pip.index import PackageFinder
+    from pip.req.req_set import RequirementSet
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.download import is_file_url, url_to_path
+    from pip._internal.index import PackageFinder
+    from pip._internal.req.req_set import RequirementSet
 
 try:
     from pip.utils.hashes import FAVORITE_HASH

@@ -8,13 +8,19 @@ from functools import partial
 from itertools import chain, count
 
 import click
-from pip.req import InstallRequirement
 
 from .cache import DependencyCache
 from .logging import log
 from .utils import (
     UNSAFE_PACKAGES, first, format_requirement, format_specifier, full_groupby,
     get_pinned_version, is_pinned_requirement, is_vcs_link, key_from_ireq)
+
+try:
+    # pip<=9.x.x
+    from pip.req import InstallRequirement
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.req import InstallRequirement
 
 green = partial(click.style, fg='green')
 magenta = partial(click.style, fg='magenta')

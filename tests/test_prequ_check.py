@@ -1,12 +1,18 @@
 from __future__ import unicode_literals
 
 import pytest
-from pip.exceptions import DistributionNotFound
 
 from prequ.scripts.check import main as check_main
 
 from .dirs import FAKE_PYPI_WHEELS_DIR
 from .utils import check_successful_exit, make_cli_runner
+
+try:
+    # pip<=9.x.x
+    from pip.exceptions import DistributionNotFound
+except ImportError:
+    # pip>=10.0.0
+    from pip._internal.exceptions import DistributionNotFound
 
 run_check = make_cli_runner(check_main, [])
 

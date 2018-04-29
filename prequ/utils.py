@@ -8,10 +8,18 @@ import sys
 from collections import OrderedDict
 from itertools import chain, groupby
 
-import pip
 from click import style
-from pip.download import path_to_url, url_to_path
-from pip.req import InstallRequirement
+
+try:
+    # pip<=9.x.x
+    import pip
+    from pip.download import path_to_url, url_to_path
+    from pip.req import InstallRequirement
+except ImportError:
+    # pip>=10.0.0
+    from pip import _internal as pip
+    from pip._internal.download import path_to_url, url_to_path
+    from pip._internal.req import InstallRequirement
 
 
 def first(iterable):
